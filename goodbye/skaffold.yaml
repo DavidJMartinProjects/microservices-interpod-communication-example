@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: goodbye-service
+build:
+  artifacts:
+  - image: test/goodbye-service
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - goodbye.yaml
+portForward:
+- resourceType: service
+  resourceName: goodbye-service
+  port: 9091

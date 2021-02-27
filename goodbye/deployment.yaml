@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goodbye-service
+  labels:
+    app: goodbye-service
+spec:
+  ports:
+  - port: 9091
+    protocol: TCP
+  selector:
+    app: goodbye-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodbye-service
+  labels:
+    app: goodbye-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goodbye-service
+  template:
+    metadata:
+      labels:
+        app: goodbye-service
+    spec:
+      containers:
+      - name: goodbye-service
+        image: test/goodbye-service

@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ecosystem-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+    - secretName: tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /hello-service
+            backend:
+              serviceName: hello-service
+              servicePort: 9092
+          - path: /goodbye-service
+            backend:
+              serviceName: goodbye-service
+              servicePort: 9091

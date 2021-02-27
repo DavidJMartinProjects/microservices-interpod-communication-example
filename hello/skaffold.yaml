@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: hello-service
+build:
+  artifacts:
+    - image: test/hello-service
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - hello.yaml
+portForward:
+  - resourceType: service
+    resourceName: hello-service
+    port: 9092

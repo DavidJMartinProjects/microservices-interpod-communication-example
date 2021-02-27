@@ -1,0 +1,34 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: goodbye-service
+spec:
+  selector:
+    app: goodbye-service
+  ports:
+    - protocol: TCP
+      port: 9091
+      nodePort: 30084
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodbye-service
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: goodbye-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: goodbye-service
+    spec:
+      containers:
+        - name: goodbye-service
+          image: test/goodbye-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9091
